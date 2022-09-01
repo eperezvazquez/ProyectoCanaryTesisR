@@ -8,8 +8,11 @@ from prophet.plot import plot_cross_validation_metric
 import base64
 import seaborn as sns
 import matplotlib.pyplot as plt
+import altair as alt
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
-st.title('📈Forecasting with prophet')
+
+st.title('📈Forecasting stocks with prophet')
 
 """
 About this data set 
@@ -23,41 +26,164 @@ The S&P 500 is a stock market index that tracks the largest 500 publicly traded 
 """
 
 """
-### Step 1: Import Data
+### Step 1: Importing Data
+"""
+
+"""
+The S&P 500 stock daily evolution limited by 3 companies:
+
+-- Broadcom Inc. (AVGO)
+-- Monolithic Power Systems Inc. (MPWR)
+-- Lam Research Corporation (LRCX)
 """
 data1 = pd.read_csv('/Users/jsuarez/Downloads/machine-learning-python-template-main/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 data = data1.dropna()
 data = data[data['Volume']>0]
 data= data.reset_index()
-data= data[data['Symbol'].isin(("AVGO","MPWR","LRCX"))]
-data= data[['Date','Open']]
+data3= data[data['Symbol'].isin(("AVGO","MPWR","LRCX"))]
+data3 = data3.reset_index()
+data= data3[['Date','Open']]
 data= data.groupby('Date').sum('Open')
-data= data.reset_index()
-data = data.rename(columns={'Date': 'ds','Open': 'y'})
+data1= data.reset_index()
+data = data1.rename(columns={'Date': 'ds','Open': 'y'})
 data['ds'] = pd.to_datetime(data['ds'],errors='coerce')
 data2 = data.rename(columns={'ds': 'Date','y': 'Open_value'})
 
 st.write(data2)
 max_date = data['ds'].max()
 
+#####
+def get_data():
+    source = data3
+    source = source[source.Date.gt("2004-01-01")]
+    return source
 
-sns.set_style('darkgrid')
-plt.rcParams['font.size'] = 14
-plt.rcParams['figure.figsize'] = (20, 9)
-plt.rcParams['figure.facecolor'] = '#00000000'
-plt.rcParams['lines.linewidth'] = 2
-broad = data1.query("Symbol == 'AVGO'")
-mono = data1.query("Symbol == 'MPWR'")
-inc = data1.query("Symbol == 'LRCX'")
-broad['Close'].plot(label = "Broadcom Inc.")
-mono['Close'].plot(label = 'Monolithic Power Systems')
+source = get_data()
 
-inc['Close'].plot(label = 'Inc. MPWR Lam Research Corporation LRCX')
+def get_chart(data3):
+    hover = alt.selection_single(
+        fields=["Date"],
+        nearest=True,
+        on="mouseover",
+        empty="none",
+    )
 
-plt.title('Stock Prices Semiconduction')
-plt.legend()
-plt.show()
+    lines = (
+        alt.Chart(data3, title="Evolution of stock prices")
+        .mark_line()
+        .encode(
+            x="Date",
+            y="Open",
+            color="Symbol",
+        )
+    )
 
+    # Draw points on the line, and highlight based on selection
+    points = lines.transform_filter(hover).mark_circle(size=65)
+
+    # Draw a rule at the location of the selection
+    tooltips = (
+        alt.Chart(data3)
+        .mark_rule()
+        .encode(
+            x="yearmonthdate(Date)",
+            y="Open",
+            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+            tooltip=[
+                alt.Tooltip("Date", title="Date"),
+                alt.Tooltip("Open", title="Price (USD)"),
+            ],
+        )
+        .add_selection(hover)
+    )
+    return (lines + points + tooltips).interactive()
+
+chart = get_chart(source)
+
+# Add annotations
+ANNOTATIONS = [
+    ("Sep 01, 2014", "Broadcom Inc. (AVGO) did a business with Intel for 650 million dollars."),
+    ("Jan 01, 2016", "An increase of Broadcom Inc. (AVGO) is denoted since in 2016 it merges with another company Avago from there the peak is observed."),
+    ("Aug 01, 2018", "An agreement with CA tencoloy for 19 billion dollars, from there lies the peak of the rise."),
+    ("Aug 01, 2022", "The conflict between China and Taiwan has negatively affected the value of the latter, being the main Asian supplier."),
+]
+
+annotations_df = pd.DataFrame(ANNOTATIONS, columns=["Date", "event"])
+annotations_df.Date = pd.to_datetime(annotations_df.Date)
+annotations_df["y"] = 10
+
+annotation_layer = (
+    alt.Chart(annotations_df)
+    .mark_text(size=20, text="⬇", dx=-8, dy=-10, align="left")
+    .encode(
+        x="Date:T",
+        y=alt.Y("y:Q"),
+        tooltip=["event"],
+    )
+    .interactive()
+)
+
+st.altair_chart(
+    (chart + annotation_layer).interactive(),
+    use_container_width=True
+)
+#####
+
+#####
+def get_data2():
+    source2 = data1
+    source2 = source2[source2.Date.gt("2004-01-01")]
+    return source2
+
+source2 = get_data()
+
+def get_chart2(data1):
+    hover = alt.selection_single(
+        fields=["Date"],
+        nearest=True,
+        on="mouseover",
+        empty="none",
+    )
+
+    lines = (
+        alt.Chart(data1, title="Evolution of stock sumarized")
+        .mark_line()
+        .encode(
+            x="Date",
+            y="Open",
+        )
+    )
+
+    # Draw points on the line, and highlight based on selection
+    points = lines.transform_filter(hover).mark_circle(size=65)
+
+    # Draw a rule at the location of the selection
+    tooltips = (
+        alt.Chart(data1)
+        .mark_rule()
+        .encode(
+            x="yearmonthdate(Date)",
+            y="Open",
+            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+            tooltip=[
+                alt.Tooltip("Date", title="Date"),
+                alt.Tooltip("Open", title="Price (USD)"),
+            ],
+        )
+        .add_selection(hover)
+    )
+    return (lines + points + tooltips).interactive()
+
+chart2 = get_chart2(source2)
+
+# Add annotations
+
+st.altair_chart(
+    (chart2).interactive(),
+    use_container_width=True
+)
+
+###
 
 """
 ### Step 2: Select Forecast Horizon
@@ -71,7 +197,7 @@ min_value = 1, max_value = 365)
 
 """
 ### Step 3: Visualize Forecast Data
-The below visual shows future predicted values. "yhat" is the predicted value, and the upper and lower limits are (by default) 80% confidence intervals.
+The below visual shows future predicted values. "Mean_predict" is the predicted value, and the upper and lower limits are (by default) 80% confidence intervals.
 """
 m = Prophet(interval_width=0.95, weekly_seasonality=False, changepoint_prior_scale=0.9)
 m.add_seasonality(name='yearly', period=365, fourier_order=8)
@@ -87,28 +213,54 @@ fcst = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
 fcst_filtered =  fcst[fcst['ds'] > max_date] 
 fcst_filtered = fcst_filtered.rename(columns={'ds': 'Date','yhat': 'Mean_predict', 'yhat_lower': 'Low_prediction', 'yhat_upper': 'High_prediction'})
 st.write(fcst_filtered)
-    
+
 """
-The next visual shows the actual (black dots) and predicted (blue line) values over time.
+The next few visuals show a high level trend of values, day of week trends, and yearly trends (if dataset covers multiple years).
+"""
+
+fig2 = m.plot_components(forecast)
+st.write(fig2)  
+
+"""
+The next visual shows the reals (black dots) and predicted (blue line) values over time. The blue shaded area represents upper and lower confidence intervals.
 """
 
 fig1 = m.plot(forecast)
 st.write(fig1)
 
-"""
-* In 2014 they did a business with Intel for 650 million dollars. 
-* An increase of Broadcom Inc. is denoted since in 2016 it merges with another company Avago from there the peak is observed. 
-* And in August 2018 an agreement with CA tencoloy for 19 billion dollars, from there lies the peak of the rise.
-* La pandemia en 2020 generó movimientos fuera de lo que se podía predecir. La demanda umentó e hizo que subiera el valor de estas empresas
-* Por último, la guerra entre China y Taiwán afectó negativamente el valor ya que este último es el principal proveedor asiático.
-"""
+
+
+metric_df = forecast.set_index('ds')[['yhat']].join(data.set_index('ds').y).reset_index()
+metric_df.dropna(inplace=True)
 
 """
-The next few visuals show a high level trend of predicted values, day of week trends, and yearly trends (if dataset covers multiple years). The blue shaded area represents upper and lower confidence intervals.
+The r-squared is close to 1 so we can conclude that the fit is good. 
+An r-squared value over 0.9 is amazing (and probably too good to be true, which tells me this data is most likely overfit).
+The value obtained is:
 """
-fig2 = m.plot_components(forecast)
-st.write(fig2)
+st.write(r2_score(metric_df.y, metric_df.yhat))
+"""
 
+MSE:
+"""
+st.write(mean_squared_error(metric_df.y, metric_df.yhat))
+"""
+That's a large MSE value... and confirms my suspicion that this data is overfit and won't likely hold up well into the future. Remember... for MSE, closer to zero is better.
+
+
+And finally, MAE result:
+"""
+st.write(mean_absolute_error(metric_df.y, metric_df.yhat))
+
+
+
+"""
+
+In summary, both in the application of Time Series at the level of the General Index with all the companies and at the level of the 3 selected companies that are AVGO Broadcom, MPWR Monolithic Power Systems Inc, LRCX Lam Research Corporation Lam Research, in both cases we find that time series seasonal manages to better predict the model with a confidence interval of 95% and weekly_seasonality=False and changepoint_prior_scale=0.9.
+
+
+For the next cases, we will make predictions for each companies, also using a multivariable model. For example, models MLP Multivariant (https://www.youtube.com/watch?v=87c9D_41GWg)
+"""
 
 """
 ### Step 4: Download the Forecast Data
