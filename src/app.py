@@ -57,9 +57,9 @@ from prophet.plot import add_changepoints_to_plot
 from utils import Helpers
 
 
-SP500_Comp = pd.read_csv('/workspace/final-project/assets/sp500_companies.csv',parse_dates=[0], infer_datetime_format=True,index_col=0)
-price = pd.read_csv('/workspace/final-project/assets/sp500_index.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
-stocks = pd.read_csv('/workspace/final-project/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+SP500_Comp = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_companies.csv',parse_dates=[0], infer_datetime_format=True,index_col=0)
+price = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_index.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+stocks = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 
 #EDA 500 companies
 SP500_Comp[SP500_Comp['State'].isnull()].head(3)
@@ -96,8 +96,6 @@ price.isna().sum()
 stocks.isna().sum()
 
 stocks = stocks.dropna()
-
-stocks = stocks[stocks['Volume']>0]
 
 
 sns.set_style('darkgrid')
