@@ -25,7 +25,7 @@ The S&P 500 is a stock market index that tracks the largest 500 publicly traded 
 """
 ### Step 1: Import Data
 """
-data1 = pd.read_csv('/workspace/final-project/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+data1 = pd.read_csv('../assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 data = data1.dropna()
 data = data[data['Volume']>0]
 data= data.reset_index()
