@@ -57,9 +57,9 @@ from prophet.plot import add_changepoints_to_plot
 from utils import Helpers
 
 
-SP500_Comp = pd.read_csv('/Users/jsuarez/Downloads/machine-learning-python-template-main/assets/sp500_companies.csv',parse_dates=[0], infer_datetime_format=True,index_col=0)
-price = pd.read_csv('/Users/jsuarez/Downloads/machine-learning-python-template-main/assets/sp500_index.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
-stocks = pd.read_csv('/Users/jsuarez/Downloads/machine-learning-python-template-main/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+SP500_Comp = pd.read_csv('/workspace/final-project/assets/sp500_companies.csv',parse_dates=[0], infer_datetime_format=True,index_col=0)
+price = pd.read_csv('/workspace/final-project/assets/sp500_index.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+stocks = pd.read_csv('/workspace/final-project/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 
 #EDA 500 companies
 SP500_Comp[SP500_Comp['State'].isnull()].head(3)
@@ -94,11 +94,12 @@ df_max[df_max['Sector']=='Technology'].sort_values(by=['Sector','Currentprice'],
 price.isna().sum()
 #EDA Stocks
 stocks.isna().sum()
-stocks[stocks["Adj Close"].isna()]
-stocks[stocks["Adj Close"].isna()].isna().sum()
+
 stocks = stocks.dropna()
-stocks[stocks['Volume']==0]
+
 stocks = stocks[stocks['Volume']>0]
+
+
 sns.set_style('darkgrid')
 plt.rcParams['font.size'] = 14
 plt.rcParams['figure.figsize'] = (20, 9)
