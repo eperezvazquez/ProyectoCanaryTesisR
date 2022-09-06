@@ -56,7 +56,7 @@ from prophet.plot import add_changepoints_to_plot
 #Aplicando Utils
 from utils import Helpers
 
-
+#Apunta al repositorio de Joel subio el proyecto con Git trace por el peso:
 SP500_Comp = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_companies.csv',parse_dates=[0], infer_datetime_format=True,index_col=0)
 price = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_index.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 stocks = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
