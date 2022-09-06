@@ -21,7 +21,7 @@ And finally, the MAE result:
 
 In summary, both in the application of Time Series at the level of the General Index with all the companies and the story of the three selected companies are AVGO Broadcom, MPWR Monolithic Power Systems Inc, LRCX Lam Research Corporation Lam Research, in both cases we find that time series seasonal manages to better predict the model with a confidence interval of 95% and weekly_seasonality=False and changepoint_prior_scale=0.9.
 For the following cases, we will make predictions for each company using a multivariable model. For example, models MLP Multivariant (https://www.youtube.com/watch?v=87c9D_41GWg)
-To see our project, please choose https://sp500-semiconductors.herokuapp.com/.
+To see our project, PLEASE CHOOSE THIS URL TO SEE THE PROYECT: https://sp500-semiconductors.herokuapp.com/.
 Note https://es.acervolima.com/analisis-de-series-de-tiempo-usando-facebook-prophet/
 https://facebook.github.io/prophet/docs/trend_changepoints.html#automatic-changepoint-detection-in-prophet
 
