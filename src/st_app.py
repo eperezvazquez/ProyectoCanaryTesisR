@@ -12,17 +12,10 @@ import altair as alt
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 
-st.title('📈Forecasting stocks with prophet')
+st.title('📈Presupuesto')
 
 """
-About this data set 
-The Standard and Poor's 500 or S&P 500 is the most famous financial benchmark in the world.
-
-This stock market index tracks the performance of 500 large companies listed on stock exchanges in the United States. As of December 31, 2020, more than $5.4 trillion was invested in assets tied to the performance of this index.
-
-Because the index includes multiple classes of stock of some constituent companies—for example, Alphabet's Class A (GOOGL) and Class C (GOOG)—there are actually 505 stocks in the gauge.
-
-The S&P 500 is a stock market index that tracks the largest 500 publicly traded U.S. companies. Investors have long used the S&P 500 as a benchmark for their investments as it tends to signal overall market health. The S&P 500 is a “free-floating index” meaning that it only takes into consideration the health and price of shares that are publicly traded; it does not consider government-owned or privately-owned shares. The index is a popular choice for long-term investors who wish to watch growth over the coming decades.
+El objetivo de este streamlit ese poder generar un modelo de presupuesto que permite evaluar si un proyecto termina en, fuera o debajo de presupuesto
 """
 
 """
@@ -30,13 +23,12 @@ The S&P 500 is a stock market index that tracks the largest 500 publicly traded 
 """
 
 """
-The S&P 500 stock daily evolution limited by 3 companies:
-
--- Broadcom Inc. (AVGO)
--- Monolithic Power Systems Inc. (MPWR)
--- Lam Research Corporation (LRCX)
+Importan datos de SIGES
+Importan datos de wekan
+Se une en ambas BD
+Debajo es una prueba con datos de Kaggle para saber si funciona
 """
-data1 = pd.read_csv('https://media.githubusercontent.com/media/joex09/final-project/main/assets/sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
+data1 = pd.read_csv('src\sp500_stocks.csv', parse_dates=[0], infer_datetime_format=True,index_col=0)
 data = data1.dropna()
 data = data[data['Volume']>0]
 data= data.reset_index()
@@ -240,14 +232,11 @@ The value obtained is:
 """
 st.write(r2_score(metric_df.y, metric_df.yhat))
 """
-
 MSE:
 """
 st.write(mean_squared_error(metric_df.y, metric_df.yhat))
 """
 That's a large MSE value... and confirms my suspicion that this data is overfit and won't likely hold up well into the future. Remember... for MSE, closer to zero is better.
-
-
 And finally, MAE result:
 """
 st.write(mean_absolute_error(metric_df.y, metric_df.yhat))
@@ -255,10 +244,7 @@ st.write(mean_absolute_error(metric_df.y, metric_df.yhat))
 
 
 """
-
 In summary, both in the application of Time Series at the level of the General Index with all the companies and at the level of the 3 selected companies that are AVGO Broadcom, MPWR Monolithic Power Systems Inc, LRCX Lam Research Corporation Lam Research, in both cases we find that time series seasonal manages to better predict the model with a confidence interval of 95% and weekly_seasonality=False and changepoint_prior_scale=0.9.
-
-
 For the next cases, we will make predictions for each companies, also using a multivariable model. For example, models MLP Multivariant (https://www.youtube.com/watch?v=87c9D_41GWg)
 """
 
