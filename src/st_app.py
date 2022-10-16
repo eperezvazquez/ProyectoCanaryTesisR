@@ -12,7 +12,7 @@ import altair as alt
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 
-st.title('📈Machine Learning y analítica aplicada al portafolio de proyectos')
+st.title('📈Machine Learning y analítica aplicada al portafolio de proyectos - prueba')
 
 """
 El objetivo general es poder generar un cuadro de mando integral, del área de Planificación estratégica en particular de los portafolios de AGESIC, donde permita tener indicadores a la hora de la toma de decisiones. 
