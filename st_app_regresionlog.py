@@ -6,7 +6,6 @@ import pandas as pd
 
 # data visualization
 import matplotlib.pyplot as plt # data visualisation
-import seaborn as sns #data visualisation
 import plotly.express as px #data visualisation
 import plotly.graph_objects as go
 from scipy.stats import chi2_contingency, norm # Calculo de chi2
