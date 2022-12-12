@@ -1,9 +1,6 @@
 #STREAMLIT REGRESION LOGISTICA
 import numpy as np 
 
-#Pandas profile
-import pandas_profiling as pp # exploratory data analysis EDA
-
 # data processing, CSV file I/O (e.g. pd.read_csv)
 import pandas as pd 
 
