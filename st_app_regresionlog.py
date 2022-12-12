@@ -8,18 +8,9 @@ import pandas as pd
 import matplotlib.pyplot as plt # data visualisation
 import plotly.express as px #data visualisation
 import plotly.graph_objects as go
-
-# stocks related missing info
-import yfinance as yf
-
-# ignoring the warnings
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
 #ranking the stocks
 import matplotlib.pyplot as plt
 import matplotlib.dates as dates
-import optuna
-from wordcloud import WordCloud, STOPWORDS #es para la nube de palabras
 
 # Evaluar si las elimino
 import statsmodels.api as sm
