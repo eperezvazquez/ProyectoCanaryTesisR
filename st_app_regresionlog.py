@@ -125,7 +125,7 @@ avance_input = st.number_input('Porcentaje de Avance %:',min_value = 0, max_valu
 Debajo se muestra el resultado de la prediccion, una vez ingresadas las variables.
 """
 #MODELO DE REGRESION
-df_modelo = pd.read_csv('https://raw.githubusercontent.com/eperezvazquez/ProyectoCanaryTesisR/main/src/DataModeloRegresion.csv', engine='python', sep=',', quotechar='"', error_bad_lines=False)
+df_modelo = pd.read_csv('https://raw.githubusercontent.com/eperezvazquez/ProyectoCanaryTesisR/main/src/DataModeloRegresion.csv', engine='python')
 #Eliminan las filas de esos registros
 indexNames = df_modelo[df_modelo['Padre']==0].index
 # Delete these row indexes from dataFrame
