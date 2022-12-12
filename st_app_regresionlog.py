@@ -12,19 +12,6 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import matplotlib.dates as dates
 
-# Evaluar si las elimino
-import statsmodels.api as sm
-
-#Timer series
-import datetime
-
-#!pip install fbprophet --quiet
-import plotly.offline as py
-py.init_notebook_mode()
-
-#Guardar modelo
-import pickle
-
 #Aplicamos los from luego de los imports
 
 # Evaluar si las elimino
@@ -49,19 +36,6 @@ from plotly.subplots import make_subplots
 #Prophet Model Stuff
 #!pip install fbprophet --quiet
 
-from prophet import Prophet
-from prophet.plot import plot_plotly
-from prophet.plot import plot_yearly
-from prophet.plot import add_changepoints_to_plot
-from pickle import FALSE
-import pandas as pd
-import numpy as np
-from prophet import Prophet
-from prophet.diagnostics import performance_metrics
-from prophet.diagnostics import cross_validation
-from prophet.plot import plot_cross_validation_metric
-import base64
-import matplotlib.pyplot as plt
 import altair as alt
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import streamlit as st
