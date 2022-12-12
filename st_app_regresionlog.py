@@ -8,7 +8,6 @@ import pandas as pd
 import matplotlib.pyplot as plt # data visualisation
 import plotly.express as px #data visualisation
 import plotly.graph_objects as go
-from scipy.stats import chi2_contingency, norm # Calculo de chi2
 
 # stocks related missing info
 import yfinance as yf
@@ -71,7 +70,6 @@ from prophet.diagnostics import performance_metrics
 from prophet.diagnostics import cross_validation
 from prophet.plot import plot_cross_validation_metric
 import base64
-import seaborn as sns
 import matplotlib.pyplot as plt
 import altair as alt
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
