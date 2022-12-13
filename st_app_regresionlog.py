@@ -1,7 +1,7 @@
 #STREAMLIT REGRESION LOGISTICA
 import pandas as pd
-import numpy as np 
-import altair as alt
+import numpy as np
+import base64 
 import streamlit as st
 
 st.title('📈 ¿Quiere saber si su proyecto termina con dificultad?')
