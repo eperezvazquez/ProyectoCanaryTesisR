@@ -1,41 +1,6 @@
 #STREAMLIT REGRESION LOGISTICA
+import pandas as pd
 import numpy as np 
-
-# data processing, CSV file I/O (e.g. pd.read_csv)
-import pandas as pd 
-
-# data visualization
-import matplotlib.pyplot as plt # data visualisation
-import plotly.express as px #data visualisation
-import plotly.graph_objects as go
-#ranking the stocks
-import matplotlib.pyplot as plt
-import matplotlib.dates as dates
-
-#Aplicamos los from luego de los imports
-
-# Evaluar si las elimino
-from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn import linear_model
-from matplotlib.pyplot import figure
-from sklearn.metrics import accuracy_score, confusion_matrix
-from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import RepeatedStratifiedKFold
-from sklearn.model_selection import GridSearchCV
-from sklearn.feature_selection import RFE
-from sklearn.feature_selection import RFECV
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score, classification_report, precision_score, recall_score 
-from sklearn.metrics import confusion_matrix, precision_recall_curve, roc_curve, auc, log_loss
-
-#ranking the stocks
-from plotly.subplots import make_subplots
-
-#Prophet Model Stuff
-#!pip install fbprophet --quiet
-
 import altair as alt
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import streamlit as st
